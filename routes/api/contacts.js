@@ -12,7 +12,7 @@ const {
 //GET
 router.get('/', async (req, res, next) => {
   try {
-    const data = await Contacts.getAll();
+    const data = await Contacts.listContacts();
 
     return res.status(200).json({ status: 'success', code:200, data });
   } catch (error) {
@@ -23,14 +23,14 @@ router.get('/', async (req, res, next) => {
 // GET by Id
 router.get('/:id', async (req, res, next) => {
   try {
-    const contact = await Contacts.getById(req.params.id);
+    const contact = await Contacts.getContactById(req.params.id);
 
     if (contact) {
-      return res.status.(200).json({ status: 'success', code: 200, contact });
+      return res.status(200).json({ status: 'success', code: 200, contact });
     }
     return res
-      .status(404);
-      .json({ status: 'error', code: 404, message: 'Not Found' });
+      .status(404)
+      .json({ status: 'error', code: 404, message: 'Not Found' })
 
   } catch (error) {
     next(error);
@@ -40,7 +40,7 @@ router.get('/:id', async (req, res, next) => {
 //POST
 router.post('/', validateCreateContact, async (req, res, next) => {
   try {
-    const contact = await Contacts.create(req.body);
+    const contact = await Contacts.addContact(req.body);
   return res
     .status (201)
     .json({ status: 'success', code: 201, data: { contact }})
@@ -53,7 +53,7 @@ router.post('/', validateCreateContact, async (req, res, next) => {
 //DELETE
 router.delete('/:id', async (req, res, next) => {
   try {
-    const contacts = await Contacts.remove(req.params.id);
+    const contacts = await Contacts.removeContact(req.params.id);
 
     if (contacts) {
       return res.status(200).json({
@@ -71,9 +71,9 @@ router.delete('/:id', async (req, res, next) => {
 })
 
 //PUT
-router.put('/:id', ValidateUpdateContact, async (req, res, next) => {
+router.put('/:id', validateUpdateContact, async (req, res, next) => {
   try {
-    const contact = await Contacts.update(req.params.id, req.body);
+    const contact = await Contacts.updateContact(req.params.id, req.body);
 
     if (contact) {
       return res.status(200).json({ status: 'success', code: 200, contact });
