@@ -24,3 +24,11 @@ const schemaUpdateContact = Joi.object({
         .optional(),
     phone: Joi.strin().pattern(new RegExp('^[0-9]{10,13}$')).optional(),
 }).min(1);
+
+module.exports.validateCreateContact = (req, _, next) => {
+    return validate(schemaCreateContact, req.body, next);
+};
+
+module.exports.validateUpdateContact = (req, _, next) => {
+    return validate(schemaUpdateContact, req.body, next);
+};

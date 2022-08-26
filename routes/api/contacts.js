@@ -7,7 +7,6 @@ const Contacts = require('../../models/contacts');
 const {
   validateCreateContact,
   validateUpdateContact,
-  validateUpdateContactName,
 } = require('./validation');
 
 //GET
