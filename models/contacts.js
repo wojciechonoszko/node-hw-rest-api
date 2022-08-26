@@ -2,7 +2,7 @@
 
  const path = require('path');
 
- const contactsPath = path.join('./models/contacts.json');
+ const contactsPath = path.join('./contacts.json');
 
  const { uuid } = require('uuid');
 

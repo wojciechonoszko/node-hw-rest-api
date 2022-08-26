@@ -1,6 +1,6 @@
-const express = require('express')
+const express = require('express');
 
-const router = express.Router()
+const router = express.Router();
 
 const Contacts = require('../../models/contacts');
 
@@ -10,7 +10,7 @@ const {
 } = require('./validation');
 
 //GET
-router.get('/', async (req, res, next) => {
+router.get('/', async (_, res, next) => {
   try {
     const data = await Contacts.listContacts();
 
