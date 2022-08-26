@@ -9,7 +9,7 @@ const {
   validateUpdateContact,
 } = require('./validation');
 
-//GET
+// GET
 router.get('/', async (_, res, next) => {
   try {
     const data = await Contacts.listContacts();
@@ -37,7 +37,7 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-//POST
+// POST
 router.post('/', validateCreateContact, async (req, res, next) => {
   try {
     const contact = await Contacts.addContact(req.body);
@@ -50,7 +50,7 @@ router.post('/', validateCreateContact, async (req, res, next) => {
   
 })
 
-//DELETE
+// DELETE
 router.delete('/:id', async (req, res, next) => {
   try {
     const contacts = await Contacts.removeContact(req.params.id);
@@ -70,7 +70,7 @@ router.delete('/:id', async (req, res, next) => {
   }
 })
 
-//PUT
+// PUT
 router.put('/:id', validateUpdateContact, async (req, res, next) => {
   try {
     const contact = await Contacts.updateContact(req.params.id, req.body);

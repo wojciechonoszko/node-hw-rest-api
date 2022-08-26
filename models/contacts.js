@@ -2,7 +2,7 @@
 
  const path = require('path');
 
- const contactsPath = path.join('./contacts.json');
+ const contactsPath = path.join('./models/contacts.json');
 
  const { uuid } = require('uuid');
 
@@ -21,7 +21,7 @@ const getContactById = async (id) => {
   return contactArr.find(contact => contact.id === id);
 };
 
-//DELETE
+// DELETE
 const removeContact = async (id) => {
   const contacts = await listContacts();
   const contactArr = contacts.contacts;
@@ -39,7 +39,7 @@ const removeContact = async (id) => {
   return status;
 }
 
-//POST
+// POST
 const addContact = async (body) => {
   const id = uuid();
 
@@ -57,7 +57,7 @@ const addContact = async (body) => {
   return record;
 }
 
-//UPDATE
+// UPDATE
 const updateContact = async (id, body) => {
   const contacts = await listContacts();
   const contactArr = contacts.contacts;
