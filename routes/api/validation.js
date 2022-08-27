@@ -3,17 +3,17 @@ const Joi = require('joi');
 // POST
 
 const schemaCreateContact = Joi.object({
-    username: Joi.string()
+    name: Joi.string()
     .min(3)
     .max(30)
     .required(),
     email: Joi.string()
         .email({
             minDomainSegments: 2,
-            tlds: {allow: ['com', 'net', 'ua', 'pl']},
+            tlds: {allow: ['com', 'net', 'ua', 'pl', 'org']},
         })
         .required(),
-    phone: Joi.string().pattern(new RegExp('^[0-9]{10, 13}$')).required(),
+    phone: Joi.string().pattern(new RegExp('[0-9]')).required(),
 });
 
 // PUT
@@ -22,10 +22,10 @@ const schemaUpdateContact = Joi.object({
     email: Joi.string()
         .email({
             minDomainSegments: 2,
-            tlds: { allow: ['com', 'net', 'ua']},
+            tlds: { allow: ['com', 'net', 'ua', 'pl', 'org']},
         })
         .optional(),
-    phone: Joi.string().pattern(new RegExp('^[0-9]{10,13}$')).optional(),
+    phone: Joi.string().pattern(new RegExp('[0-9]')).optional(),
 }).min(1);
 
 const validate = async (schema, body, next) => {
