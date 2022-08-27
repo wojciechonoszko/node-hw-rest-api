@@ -16,9 +16,8 @@ const listContacts = async () => {
 // GET by Id
 const getContactById = async id => {
   const contacts = await listContacts();
-  const contactArr = contacts.contacts;
-
-  return contactArr.find((contact) => contact.id === (id.toString()));
+  const contact = contacts.find((contact) => contact.id === id);
+  return contact
 };
 
 // DELETE

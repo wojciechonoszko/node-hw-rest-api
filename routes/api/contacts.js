@@ -4,6 +4,14 @@ const router = express.Router();
 
 const Contacts = require('../../models/contacts');
 
+// const {
+//   listContacts,
+//   getContactById,
+//   addContact,
+//   updateContact,
+//   removeContact,
+// } = require("../../models/contacts");
+
 const {
   validateCreateContact,
   validateUpdateContact,
