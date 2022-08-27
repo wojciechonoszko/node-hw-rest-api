@@ -29,9 +29,9 @@ const schemaUpdateContact = Joi.object({
 }).min(1);
 
 module.exports.validateCreateContact = (req, _, next) => {
-    return validate(schemaCreateContact, req.body, next);
+    return Joi.validate(schemaCreateContact, req.body, next);
 };
 
 module.exports.validateUpdateContact = (req, _, next) => {
-    return validate(schemaUpdateContact, req.body, next);
+    return Joi.validate(schemaUpdateContact, req.body, next);
 };
