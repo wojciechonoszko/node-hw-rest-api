@@ -13,16 +13,16 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/contacts', contactsRouter);
-app.use('/api/contacts/:id', contactsRouter);
+app.use('/api/contacts/:contactId', contactsRouter);
 
 app.use((req, res) => {
-  res.status(404).json({ status: 'error', code: 404, message: 'Not found' })
-})
+  res.status(404).json({ status: 'error', code: 404, message: 'Not found' });
+});
 
 app.use((err, req, res, next) => {
   const code = err.status || 500;
   const status = err.status ? 'error' : 'fail';
-  res.status(500).json({ status, code, message: err.message })
+  res.status(code).json({ status, code, message: err.message })
 });
 
-module.exports = app
+module.exports = app;
