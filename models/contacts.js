@@ -4,7 +4,7 @@
 
  const contactsPath = path.join('./models/contacts.json');
 
- const { uuid } = require('uuid');
+ const { v4 } = require('uuid');
 
 
 // GET
@@ -16,27 +16,55 @@ const listContacts = async () => {
 // GET by Id
 const getContactById = async id => {
   const contacts = await listContacts();
-  const contact = contacts.find((contact) => contact.id === id);
-  return contact
+  const contact = contacts.find(contact => contact.id === id);
+
+  console.log(id);
+  return contact;
+  // return contactArr.find(contact => contact.id === id);
+  // try {
+  //   const contacts = await listContacts();
+  //   const contact = contacts.find((contact) => contact.id.toString() === id);
+  //   if (!contact) {
+  //     return null;
+  //   }
+  //   return contact;
+  // } catch (error) {
+  //   console.log(error);
+  // }
 };
 
 // DELETE
 const removeContact = async (id) => {
-  const contacts = await listContacts();
-  const contactArr = contacts.contacts;
+  try {
+    const contacts = await listContacts();
+    const idx = contacts.findIndex((contact) => contact.id === id);
+    if (idx === -1) {
+      return null;
+    }
+    const newContacts = contacts.filter((_, index) => index !== idx);
+    await fs.writeFile(contactsPath, JSON.stringify(newContacts));
+    return contacts[idx];
+  } catch (error) {
+    console.error(error);
+  }
 
-  const updatedContacts = contactArr.filter(
-    contact => contact.id.toString() !== id,
-  );
 
-  await fs.writeFile(
-    contactsPath,
-    JSON.stringify({ contacts: updatedContacts }, null, 2),
 
-  );
-  const status = updatedContacts.length < contactArr.length;
-  return status;
-}
+  // const contacts = await listContacts();
+  // //const contactArr = contacts.contacts;
+
+  // const updatedContacts = contacts.filter(
+  //   contact => contact.id.toString() !== id,
+  // );
+
+  // await fs.writeFile(
+  //   contactsPath,
+  //   JSON.stringify({ contacts: updatedContacts }, null, 2),
+
+  // );
+  // const status = updatedContacts.length < contacts.length;
+  // return status;
+};
 
 // POST
 const addContact = async (body) => {
