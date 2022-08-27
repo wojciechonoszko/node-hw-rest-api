@@ -10,10 +10,9 @@ const {
 } = require('./validation');
 
 // GET
-router.get('/', async (_, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     const data = await Contacts.listContacts();
-
     return res.status(200).json({ status: 'success', code:200, data });
   } catch (error) {
     next(error);
