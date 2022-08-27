@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/', contactsRouter);
-app.use('/:contactId', contactsRouter);
+app.use('/:id', contactsRouter);
 
 app.use((req, res) => {
   res.status(404).json({ status: 'error', code: 404, message: 'Not found' });

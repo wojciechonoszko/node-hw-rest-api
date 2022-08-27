@@ -3,14 +3,17 @@ const Joi = require('joi');
 // POST
 
 const schemaCreateContact = Joi.object({
-    name: Joi.string().min(3).max(30).required(),
+    username: Joi.string()
+    .min(3)
+    .max(30)
+    .required(),
     email: Joi.string()
         .email({
             minDomainSegments: 2,
-            tlds: {allow: ['com', 'net', 'ua']},
+            tlds: {allow: ['com', 'net', 'ua', 'pl']},
         })
         .required(),
-        phone: Joi.string().pattern(new RegExp('^[0-9]{10, 13}$')).required(),
+    phone: Joi.string().pattern(new RegExp('^[0-9]{10, 13}$')).required(),
 });
 
 // PUT

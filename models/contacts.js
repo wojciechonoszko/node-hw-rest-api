@@ -14,11 +14,11 @@ const listContacts = async () => {
 };
 
 // GET by Id
-const getContactById = async (id) => {
+const getContactById = async id => {
   const contacts = await listContacts();
   const contactArr = contacts.contacts;
 
-  return contactArr.find(contact => contact.id === id);
+  return contactArr.find((contact) => contact.id === (id.toString()));
 };
 
 // DELETE
