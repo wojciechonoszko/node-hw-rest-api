@@ -1,10 +1,12 @@
- const fs = require('fs/promises');
+//  const fs = require('fs/promises');
 
- const path = require('path');
+//  const path = require('path');
 
- const contactsPath = path.join('./models/contacts.json');
+//  const contactsPath = path.join('./models/contacts.json');
 
- const { v4 } = require('uuid');
+//  const { v4 } = require('uuid');
+
+ const Contact = require ('./schemas/contact');
 
 
 // GET
