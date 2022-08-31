@@ -34,7 +34,7 @@ const contactSchema = new Schema(
 
             transform: function (doc, ret) {
                 delete ret._id;
-                delete ret.shorContact,
+                delete ret.shortContact;
                 return ret;
             },
         },
