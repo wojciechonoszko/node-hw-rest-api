@@ -8,13 +8,14 @@ const Contacts = require('../../models/contacts');
 const {
   validateCreateContact,
   validateUpdateContact,
+  validateUpdateContactFavorite,
 } = require('./validation');
 
 // GET
 router.get('/', async (req, res, next) => {
   try {
     const data = await Contacts.listContacts();
-    return res.status(200).json({ status: 'success', code:200, data });
+    return res.status(200).json({ status: 'success, bravoo', code:200, data });
   } catch (error) {
     next(error);
   }
@@ -84,6 +85,26 @@ router.put('/:id', validateUpdateContact, async (req, res, next) => {
   } catch (error){
     next(error);
   }
-})
+});
+
+// PATCH
+router.patch('/:id/favorite', validateUpdateContactFavorite, async (req, res, next) =>{
+    try{
+       const contact = req.body.hasOwnProperty('favorite')
+       ? await Contacts.update(req.params.id, req.body)
+       : { message: 'missing field favorite' };
+
+       if (contact) {
+         return res.status(200).json({ status: 'success', code: 200, contact });
+
+       }
+       return res
+       .status (404)
+       .json({ status: 'error', code: 404, message: 'Not found'});
+    } catch(error){
+      next(error);
+    }
+  },
+);
 
 module.exports = router

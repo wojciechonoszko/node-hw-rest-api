@@ -1,12 +1,10 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
-const uriDB = process.env.URI_DB;
+const uriDB = process.env.DB_SRV;
 
 const dataBase = mongoose.connect(uriDB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true,
-    poolSize: 5,
 });
 
 mongoose.connection.on('connect', () => {
