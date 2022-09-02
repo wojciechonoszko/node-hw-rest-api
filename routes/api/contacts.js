@@ -89,10 +89,12 @@ router.put('/:id', validateUpdateContact, async (req, res, next) => {
 
 // PATCH
 router.patch('/:id/favorite', validateUpdateContactFavorite, async (req, res, next) =>{
+    const id = req.params.id;
+    const favorite = req.body;
     try{
-       const contact = req.body.hasOwnProperty('favorite')
-       ? await Contacts.update(req.params.id, req.body)
-       : { message: 'missing field favorite' };
+      const contact = favorite.hasOwnProperty('favorite')
+      ? await Contacts.updateContact(id, favorite)
+      : { message: 'missing field favorite' };
 
        if (contact) {
          return res.status(200).json({ status: 'success', code: 200, contact });

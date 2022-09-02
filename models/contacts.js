@@ -4,40 +4,39 @@
 
 // GET
 const listContacts = async () => {
-  const result = await Contact.find().lean();
-  return result;
+  return result = Contact.find().lean();
+  
   
 };
 
 // GET by Id
 const getContactById = async id => {
-  const result = await Contact.findOne({ _id: id}).lean();
-  return result;
+  return result = Contact.findOne({ _id: id}).lean();
+  
   
 };
 
 // DELETE
 const removeContact = async (id) => {
-  const result = await Contact.findByIdAndRemove({_id: id});
-  return result;
+  return result = Contact.findByIdAndRemove({_id: id});
 };
 
 // POST
 const addContact = async (body) => {
-  const result = await Contact.create(body);
-  return result;
+  return result = Contact.create(body);
+  
 }
 
 // UPDATE
 const updateContact = async (id, body) => {
-  const result = await Contact.findOneAndUpdate(
+  return result = Contact.findOneAndUpdate(
     {
       _id: id,
     },
     { ...body },
     { new: true },
   );
-  return result;
+  
 };
 
 module.exports = {
