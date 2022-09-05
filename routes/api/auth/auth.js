@@ -1,25 +1,19 @@
 const express = require('express');
-const jwt = require('jsonwebtoken');
-const User = require('../../../models/user');
 const router = express.Router();
 
-const signup = async (req, res, next) => {
-    const { email, password } = req.body;
+const ctrl = require('../../../controllers/user');
+const guard = require('../../../helpers/guard');
+// const jwt = require('jsonwebtoken');
+// const User = require('../../../models/user');
 
-    const userExists = await User.findOne({ email }).lean();
+const { validateUserSignup, validateUserLogin } = require('./validation');
 
-    if (userExists) {
-        return res.status(409).json({ message: "User already exists "});
-    }
 
-    try {
-        const newUser = new User({ email, password});
-        await newUser.setPassword(password);
-        await newUser.save();
-        res.json("ok");
-    } catch (error){
-        next(error);
-    }
-};
 
-module.exports = signup;
+router.post('/signup', validateUserSignup, ctrl.signup); 
+// router.post('/users/login', validateUserLogin, ctrl.login);
+
+
+// router.post('/users/signup', validateUserSignup, async (req, res, next) => {
+
+module.exports = router

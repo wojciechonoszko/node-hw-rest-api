@@ -33,7 +33,7 @@ userSchema.methods.validatePassword = function (password) {
     return bCrypt.compare(password, this.password);
 };
 
-const User = mongoose.model("user", userSchema, "users");
+const User = mongoose.model("user", userSchema);
 
 module.exports = User;
 

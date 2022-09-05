@@ -17,7 +17,7 @@ app.use(express.json());
 
 app.use('/', contactsRouter);
 app.use('/:id', contactsRouter);
-app.use('/users/signup', authRouter);
+app.use('/users', authRouter);
 
 app.use((req, res) => {
   res.status(404).json({ status: 'error', code: 404, message: 'Not found' });
