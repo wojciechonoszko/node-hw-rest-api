@@ -10,7 +10,7 @@ const shortFunc = require('../helpers/shortFunctions');
 const signup = async (req, res, next) => {
     const { email, password, subscription } = req.body;
 
-    const userExists = await User.findOne({ email }).lean();
+    const userExists = await User.findOne({ email });
 
     if (userExists) {
         return res.status(HttpCode.CONFLICT).json({
@@ -67,7 +67,9 @@ const login = async (req, res, next) => {
 // Logout
 const logout = async (req, res, next) => {
     try {
-        await shortFunc.updateToken(req.user._id, null);
+        const { email } = req.body;
+        const user = await User.findOne({ email });
+        await shortFunc.updateToken(user._id, null);
 
         return res.status(HttpCode.NO_CONTENT).json({
             status: 'success',
@@ -80,17 +82,28 @@ const logout = async (req, res, next) => {
 
 // Current
 const current = async (req, res, next) => {
-    try {
-        const { email, subscription } = await shortFunc.findByToken(req.user.token);
+    // try {
+    //     const { email, subscription } = await shortFunc.findByToken(req.user.token);
 
-        return res.status(HttpCode.OK).json({
-            status: 'success',
-            code: HttpCode.OK,
-            ResponseBody: { email, subscription },
-        })
-    } catch (error) {
-        next(error);
-    }
+    //     return res.status(HttpCode.OK).json({
+    //         status: 'success',
+    //         code: HttpCode.OK,
+    //         ResponseBody: { email, subscription },
+    //     })
+    // } catch (error) {
+    //     next(error);
+    // }
+    const { email } = req.user;
+  res.json({
+    status: "success",
+    code: 200,
+    data: {
+      user: {
+        email,
+        subscription: req.user.subscription,
+      },
+    },
+  });
 };
 
 module.exports = {signup, login, logout, current};

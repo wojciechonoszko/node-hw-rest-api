@@ -31,6 +31,6 @@ const contactSchema = new Schema(
 
 contactSchema.plugin(mongoosePaginate);
 
-const Contact = mongoose.model('contact', contactSchema);
+ const Contact = mongoose.model('contact', contactSchema);
 
-module.exports = Contact;
+ module.exports = Contact;
