@@ -1,16 +1,16 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
-const User = require('../models/user');
+const User = require('../models/schemas/user');
 const { HttpCode } = require('../helpers/constants');
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
-const shortFunc = require('../helpers/shortFunctions');
+const shortFunc = require('../models/shortFunctions');
 
 // Signup
 
 const signup = async (req, res, next) => {
-    const { email, password, subscription } = req.body;
+    const { email, password } = req.body;
 
-    const userExists = await User.findOne({ email });
+    const userExists = await shortFunc.findByEmail(email);
 
     if (userExists) {
         return res.status(HttpCode.CONFLICT).json({
@@ -21,7 +21,7 @@ const signup = async (req, res, next) => {
     }
 
     try {
-        const newUser = await User.create(req.body);
+    const newUser = await User.create(req.body);
     const { email, subscription } = newUser;
     await newUser.setPassword(password);
     await newUser.save();
@@ -67,43 +67,39 @@ const login = async (req, res, next) => {
 // Logout
 const logout = async (req, res, next) => {
     try {
-        const { email } = req.body;
-        const user = await User.findOne({ email });
-        await shortFunc.updateToken(user._id, null);
+        const { email, _id } = req.body;
+        const user = await User.findById();
+        await User.findByIdAndUpdate(_id, {token: null});
 
         return res.status(HttpCode.NO_CONTENT).json({
             status: 'success',
+            message: 'Email or password is wrong',
             code: HttpCode.NO_CONTENT,
+            
         });
     } catch (error) {
         next(error);
     }
 };
 
+
+
 // Current
 const current = async (req, res, next) => {
-    // try {
-    //     const { email, subscription } = await shortFunc.findByToken(req.user.token);
+    try {
+        const { email, subscription } = await shortFunc.findByToken(req.user.token);
 
-    //     return res.status(HttpCode.OK).json({
-    //         status: 'success',
-    //         code: HttpCode.OK,
-    //         ResponseBody: { email, subscription },
-    //     })
-    // } catch (error) {
-    //     next(error);
-    // }
-    const { email } = req.user;
-  res.json({
-    status: "success",
-    code: 200,
-    data: {
-      user: {
-        email,
-        subscription: req.user.subscription,
-      },
-    },
-  });
+        return res.status(HttpCode.OK).json({
+            status: 'success',
+            code: HttpCode.OK,
+            ResponseBody: { email, subscription },
+        })
+    } catch (error) {
+        next(error);
+    }
+    
 };
+
+
 
 module.exports = {signup, login, logout, current};
