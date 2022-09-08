@@ -31,18 +31,36 @@ const avatarsDir = path.join(process.cwd(), '/public/avatars');
 
 const updateAvatar = async (req, res) => {
     const { path: tempUpload, originalname } = req.file;
-    const { _id } = req.user;
-    // const id = "6319c07cbf8bd2b46924baf2";
+    // const { _id } = req.user;
+    const id = "6319c07cbf8bd2b46924baf2";
     // resizing avatar
-    const image = await Jimp.read(tempUpload);
-    image.resize(250, 250).writeAsync(tempUpload);
-  
+    // const image = await Jimp.read(tempUpload);
+    // image.resize(250, 250).writeAsync(tempUpload);
     const [extension] = originalname.split(".").reverse();
-    const newName = `${_id}.${extension}`;
+    const newName = `${id}.${extension}`;
     const resultDir = path.join(avatarsDir, newName);
+    try {
+      Jimp.read(tempUpload, (error, image) => {
+        // !! truthy => true
+        // !! falsey => false
+        // !!"1" => true
+        // !!"0" => true
+        // !!0 => false
+        if (!!error) {
+          resolve(false);
+        } else {
+          image.rotate(360).resize(250, 250).greyscale().write(resultDir);
+          //resolve(true);
+        }
+      });
+    } catch (error) {
+      next(error);
+    }
+  
+    
     await fs.rename(tempUpload, resultDir);
     const avatarURL = path.join("avatars", newName);
-    await User.findByIdAndUpdate(_id, { avatarURL });
+    // await User.findByIdAndUpdate(id, { avatarURL });
     res.json({avatarURL,});
   };
 
