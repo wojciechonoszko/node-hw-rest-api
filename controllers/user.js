@@ -4,13 +4,21 @@ const User = require('../models/schemas/user');
 const { HttpCode } = require('../helpers/constants');
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 const shortFunc = require('../models/shortFunctions');
+const gravatar = require("gravatar");
+
+
+const path = require("path");
+const fs = require("fs/promises");
+const Jimp = require("jimp");
 
 // Signup
 
 const signup = async (req, res, next) => {
-    const { email, password } = req.body;
+    const { email, password} = req.body;
 
     const userExists = await shortFunc.findByEmail(email);
+    const avatarURL = gravatar.url(email);
+    console.log(avatarURL);
 
     if (userExists) {
         return res.status(HttpCode.CONFLICT).json({
@@ -21,7 +29,11 @@ const signup = async (req, res, next) => {
     }
 
     try {
-    const newUser = await User.create(req.body);
+        const newUser = await User.create({
+            ...req.body,
+            avatarURL,
+          });
+    // const newUser = await User.create(req.body);
     const { email, subscription } = newUser;
     await newUser.setPassword(password);
     await newUser.save();
@@ -35,6 +47,7 @@ const signup = async (req, res, next) => {
         next(error);
     }
 };
+
 
 const login = async (req, res, next) => {
     try {
@@ -99,6 +112,7 @@ const current = async (req, res, next) => {
     }
     
 };
+
 
 
 
