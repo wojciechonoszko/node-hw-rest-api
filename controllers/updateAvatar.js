@@ -44,7 +44,7 @@ const updateAvatar = async (req, res) => {
       });
     }
     return res.json({
-      status: 'success',
+      status: 'unsuccessful',
       code: HttpCode.UNAUTHORIZED,
       ResponseBody: {
         message: 'Not authorized',
