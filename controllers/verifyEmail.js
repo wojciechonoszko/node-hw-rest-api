@@ -1,4 +1,4 @@
-const { User } = require('../models/schemas/user');
+const User = require('../models/schemas/user');
 const { HttpCode } = require('../helpers/constants');
 
 const verifyEmail = async (req, res) => {
@@ -6,7 +6,15 @@ const verifyEmail = async (req, res) => {
     const user = await User.findOne({ verificationToken });
 
     if (!user) {
-        throw new HttpCode.NOT_FOUND("User not found");
+        // return HttpCode.NOT_FOUND("User not found");
+        return res.json({
+            token: {verificationToken},
+            status: 'unsuccess',
+            code: HttpCode.NOT_FOUND,
+            ResponseBody: { 
+                message: "User not found", 
+            },
+          });
     }
 
     await User.findByIdAndUpdate(user._id, {
