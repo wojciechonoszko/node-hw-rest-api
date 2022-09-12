@@ -2,7 +2,6 @@ const { User } = require('../models/schemas/user');
 const { HttpCode } = require('../helpers/constants');
 const shortFunc = require('../models/shortFunctions');
 const {sendEmail} = require ('../helpers/sendEmail');
-// const  handle  = require ('./verifyEmail.js');
 const { v4 } = require("uuid");
 
 const resendEmail = async (req, res, next) => {
@@ -43,8 +42,6 @@ const resendEmail = async (req, res, next) => {
             })
         return;
         }
-
-        // const result = await handle.sendEmail(email, verificationToken);
         const mail = {
             to: email,
             subject: "Confirm your email again, please.",
