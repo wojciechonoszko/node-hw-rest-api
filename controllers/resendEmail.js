@@ -1,7 +1,7 @@
 const { User } = require('../models/schemas/user');
 const { HttpCode } = require('../helpers/constants');
 const shortFunc = require('../models/shortFunctions');
-const {sendEmail} = require ('../../helpers/sendEmail');
+const {sendEmail} = require ('../helpers/sendEmail');
 const { handle } = require ('./verifyEmail.js');
 
 const resendEmail = async (req, res, next) => {
@@ -53,5 +53,7 @@ const resendEmail = async (req, res, next) => {
           next(error);
         }
 
-    }
-}
+    
+};
+
+module.exports = { resendEmail };
