@@ -6,7 +6,7 @@ const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 const shortFunc = require('../models/shortFunctions');
 const gravatar = require("gravatar");
 const { v4 } = require("uuid");
-const { sendEmail } = require('../../helpers/sendEmail');
+const  sendEmail  = require('../helpers/sendEmail');
 
 
 const path = require("path");
