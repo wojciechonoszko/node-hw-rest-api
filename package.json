@@ -42,8 +42,7 @@
     "eslint-plugin-promise": "5.2.0",
     "nodemon": "^2.0.19"
   },
-  "description": "Виконайте форк цього репозиторію для виконання домашніх завдань (2-6)\r Форк створить репозиторій на вашому http://github.com",
-  "main": ".eslintrc.js",
+   "main": ".eslintrc.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wojciechonoszko/node-hw-rest-api.git"
