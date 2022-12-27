@@ -5,6 +5,8 @@ const { HttpCode } = require('../helpers/constants');
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 const shortFunc = require('../models/shortFunctions');
 const gravatar = require("gravatar");
+const { v4 } = require("uuid");
+const  {sendEmail}  = require('../helpers/sendEmail');
 
 
 const path = require("path");
@@ -20,6 +22,8 @@ const signup = async (req, res, next) => {
     const avatarURL = gravatar.url(email);
     console.log(avatarURL);
 
+    const verificationToken = v4();
+
     if (userExists) {
         return res.status(HttpCode.CONFLICT).json({
             status: 'error',
@@ -32,11 +36,19 @@ const signup = async (req, res, next) => {
         const newUser = await User.create({
             ...req.body,
             avatarURL,
+            verificationToken,
           });
     // const newUser = await User.create(req.body);
     const { email, subscription } = newUser;
     await newUser.setPassword(password);
     await newUser.save();
+
+    const mail = {
+        to: email,
+        subject: "Confirm your email",
+        html: `a href="http://localhost:8155/api/users/verify/:${verificationToken}" target="_blank">Click to confirm email</a>`,
+    };
+    await sendEmail(mail);
 
     return res.status(HttpCode.CREATED).json({
       status: 'success',
