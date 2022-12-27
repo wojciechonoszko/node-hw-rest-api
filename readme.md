@@ -11,4 +11,3 @@ hm04-authorization - routing to work with contacts collection with authorization
 hm05-avatars - added loading avatar by Multer, gravatar, jimp.
 
 hm06-email - user email verification after registration with using SendGrid
-
