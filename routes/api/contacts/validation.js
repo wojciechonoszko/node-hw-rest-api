@@ -10,7 +10,7 @@ const schemaCreateContact = Joi.object({
     email: Joi.string()
         .email({
             minDomainSegments: 2,
-            tlds: {allow: ['com', 'net', 'ua', 'pl', 'org']},
+            tlds: {allow: ['com', 'net', 'ua', 'pl', 'org', 'uk']},
         })
         .required(),
     phone: Joi.string().pattern(new RegExp('[0-9]')).required(),
@@ -23,7 +23,7 @@ const schemaUpdateContact = Joi.object({
     email: Joi.string()
         .email({
             minDomainSegments: 2,
-            tlds: { allow: ['com', 'net', 'ua', 'pl', 'org']},
+            tlds: { allow: ['com', 'net', 'ua', 'pl', 'org', 'ca']},
         })
         .optional(),
     phone: Joi.string().pattern(new RegExp('[0-9]')).optional(),
